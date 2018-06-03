@@ -8,6 +8,5 @@
   "dependencies": {
     "big-integer": "^1.6.26",
     "elliptic": "^6.4.0"
-
   }
 }
