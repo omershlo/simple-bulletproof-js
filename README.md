@@ -3,9 +3,9 @@ javascript code for one-round,single range-proof bulletproof for *secp256k1* ell
 
 Proof of concept code based on first version of https://eprint.iacr.org/2017/1066.
 
-_To run_: 1) npm install. 2) node bulletproof_single.js
+**To run**: 1) npm install. 2) node bulletproof_single.js
 
-_NPM packages_: elliptic, big-integer.
+**NPM packages**: elliptic, big-integer.
 
 To configure value and range: (a) change value inside controller() and (b) change bound in Consts.js.  
 
