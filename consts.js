@@ -7,12 +7,13 @@ const BigInteger = require('big-integer');
 // Parameter N in secp256k1 
 const q = new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16);
 const MAXIMUM_NUMBER = new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16);
-const qBitLengthMinusOne = 255;
+const upperBoundNUmBits = 64;
 
 
 module.exports = {
   q,
   MAXIMUM_NUMBER,
   HEX: 16,
-  qBitLengthMinusOne,
+  upperBoundNUmBits,
+
 };

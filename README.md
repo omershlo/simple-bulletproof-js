@@ -5,6 +5,6 @@ Proof of concept code based on first version of https://eprint.iacr.org/2017/106
 
 To run: 1) npm install. 2) node bulletproof_single.js
 
-To configure value and range: change parameters inside controller().  
+To configure value and range: (a) change value inside controller() and (b) change bound in Consts.js.  
 
 Verifier should return true if OK. 
