@@ -477,7 +477,7 @@ function controller(){
 
 
   if(Consts.upperBoundNumBits>256){console.log("error: upper bound should be <256bits");return;}
-  if(padSize>0){console.log("error: range works only for multiples of 2 for now");return;}
+  if(padSize>0){console.log("error: range works only for powers of 2 for now");return;}
   const x1 = pickRandom(BigInteger(2).pow(Consts.upperBoundNumBits));
   const r0 = pickRandom(Consts.q);
   const r1 = pickRandom(Consts.q);
