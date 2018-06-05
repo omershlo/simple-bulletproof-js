@@ -1,6 +1,4 @@
 
-
-
 /*###############################################################################################*/
 /*################################  Prover    ##################################################*/
 /*###############################################################################################*/
@@ -38,7 +36,7 @@ function rangeBpProver(x1,pedCom1,r0,r1){
   var hRand;
   const H = utils.ec.g.mul((r0.toString(Consts.HEX)));
   let v = 0;
-  while(v< Consts.upperBoundNUmBits){
+  while(v< Consts.upperBoundNumBits){
     gRand = utils.ec.g.x.fromRed().toString(16).concat(BigInteger(v).toString(Consts.HEX));
     hRand = H.x.fromRed().toString(16).concat(BigInteger(v).toString(Consts.HEX));
     gVector[v] = utils.ec.g.mul(modulo(BigInteger(crypto.createHash('sha256').update(gRand).digest('hex'),Consts.HEX),Consts.q).toString(Consts.HEX));
@@ -50,7 +48,7 @@ function rangeBpProver(x1,pedCom1,r0,r1){
   var A  = H.mul(alpha.toString(Consts.HEX));
   var S = H.mul(rho.toString(Consts.HEX));
   let i = 0;
-  while(i< Consts.upperBoundNUmBits){
+  while(i< Consts.upperBoundNumBits){
     aL[i]=x1.shiftRight(i).mod(2).and(BigInteger(1));
     aR[i]= moduloSubq(aL[i],BigInteger(1));
     A = A.add(gVector[i].mul(aL[i].toString(Consts.HEX))).add(hVector[i].mul(aR[i].toString(Consts.HEX)));
@@ -90,7 +88,7 @@ function rangeBpProver(x1,pedCom1,r0,r1){
   var t2Part3;
   var yi = [];
   let s = 0;
-  while(s< Consts.upperBoundNUmBits){
+  while(s< Consts.upperBoundNumBits){
     yi[s] = moduloPow(y,s,Consts.q);
     t0Part1 = modulo(modulo(z,Consts.q).multiply(modulo(yi[s],Consts.q)),Consts.q);
     t0Part2 = modulo(modulo(zSquared,Consts.q).multiply(modulo(yi[s],Consts.q)),Consts.q);
@@ -143,7 +141,7 @@ function rangeBpProver(x1,pedCom1,r0,r1){
   var tX = BigInteger(0);
   var tXPart1;
   var j = 0;
-  while(j< Consts.upperBoundNUmBits){
+  while(j< Consts.upperBoundNumBits){
     //(A + B) mod C = (A mod C + B mod C) mod C
     LpPart1 = modulo(modulo(SL[j],Consts.q).multiply(modulo(xFiatShamirChall,Consts.q)),Consts.q);
     //Lp[j] = modulo(modulo(aL[j].subtract(z),Consts.q).add(LpPart1),Consts.q);
@@ -173,7 +171,7 @@ function rangeBpProver(x1,pedCom1,r0,r1){
 
   var hiTag = [];
   var yiInv = [];
-  while(k<Consts.upperBoundNUmBits){
+  while(k<Consts.upperBoundNumBits){
     yi[k] = moduloPow(y,k,Consts.q);
     yiInv[k] = yi[k].modInv(Consts.q);
     hiTag[k] = hVector[k].mul(yiInv[k].toString(Consts.HEX));
@@ -182,8 +180,8 @@ function rangeBpProver(x1,pedCom1,r0,r1){
   }
 
 
-  //Lp[Consts.upperBoundNUmBits] = BigInteger(0); //padding
-  //Rp[Consts.upperBoundNUmBits] = BigInteger(0); //padding
+  //Lp[Consts.upperBoundNumBits] = BigInteger(0); //padding
+  //Rp[Consts.upperBoundNumBits] = BigInteger(0); //padding
   const {L,R,aTag,bTag}= innerProductArgument(nic1,P, Lp,Rp,H,hiTag,gVector);
 
   return {A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag};
@@ -205,7 +203,7 @@ function innerProductArgument(nic1,P, Lp,Rp,H,hiTag,gVector){
   const moduloMul = utils.moduloMul;
 
   var Ptag = P;
-  const nPad = Consts.upperBoundNUmBits;
+  const nPad = Consts.upperBoundNumBits;
   var nTag = nPad/2;
   var i1;
   var i2;
@@ -227,8 +225,8 @@ function innerProductArgument(nic1,P, Lp,Rp,H,hiTag,gVector){
     var bTag =Rp;
     var a ;
     var b;
-  //  aTag[Consts.upperBoundNUmBits] = BigInteger(0); //padding
-  //  bTag[Consts.upperBoundNUmBits] = BigInteger(0);// padding
+  //  aTag[Consts.upperBoundNumBits] = BigInteger(0); //padding
+  //  bTag[Consts.upperBoundNumBits] = BigInteger(0);// padding
   var j = 0;
   while(nTag>=1){
    L[j]= utils.ec.g.mul('0'); //init
@@ -325,7 +323,7 @@ function rangeBpVerifier(r0,r1,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag){
   var hRand;
   const H = utils.ec.g.mul((r0.toString(Consts.HEX)));
   let v = 0;
-  while(v< Consts.upperBoundNUmBits){
+  while(v< Consts.upperBoundNumBits){
     gRand = utils.ec.g.x.fromRed().toString(16).concat(BigInteger(v).toString(Consts.HEX));
     hRand = H.x.fromRed().toString(16).concat(BigInteger(v).toString(Consts.HEX));
     gVector[v] = utils.ec.g.mul(modulo(BigInteger(crypto.createHash('sha256').update(gRand).digest('hex'),Consts.HEX),Consts.q).toString(Consts.HEX));
@@ -344,7 +342,7 @@ function rangeBpVerifier(r0,r1,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag){
   var hiTag = [];
   const yiInv = [];
   let i=0;
-  while(i<Consts.upperBoundNUmBits){
+  while(i<Consts.upperBoundNumBits){
     yi[i] = moduloPow(y,i,Consts.q);
     yiInv[i] = yi[i].modInv(Consts.q);
     hiTag[i] = hVector[i].mul(yiInv[i].toString(Consts.HEX));
@@ -358,7 +356,7 @@ function rangeBpVerifier(r0,r1,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag){
   var t0Part2;
   var t0Part3;
   let j = 0;
-  while(j< Consts.upperBoundNUmBits){
+  while(j< Consts.upperBoundNumBits){
     t0Part1 = modulo(modulo(z,Consts.q).multiply(modulo(yi[j],Consts.q)),Consts.q);
     t0Part2 = modulo(modulo(zSquared,Consts.q).multiply(modulo(yi[j],Consts.q)),Consts.q);
     t0Part3 = modulo(modulo(zCubed,Consts.q).multiply(moduloPow(BigInteger(2),j,Consts.q)),Consts.q);
@@ -393,7 +391,7 @@ function rangeBpVerifier(r0,r1,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag){
 
   var hExponent = [];
   let k = 0;
-  while(k< Consts.upperBoundNUmBits){
+  while(k< Consts.upperBoundNumBits){
     hExponent[k] = moduloAddq(moduloMulq(z,yi[k]),moduloMulq(zSquared,moduloPow(BigInteger(2),k,Consts.q)));
   P = P.add(gVector[k].mul(((Consts.q).subtract(z)).toString(Consts.HEX))).add(hiTag[k].mul(hExponent[k].toString(Consts.HEX)));
 
@@ -401,7 +399,7 @@ function rangeBpVerifier(r0,r1,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag){
   }
 
   var Ptag = P;
-  const nPad = Consts.upperBoundNUmBits;
+  const nPad = Consts.upperBoundNumBits;
   var nTag = nPad/2;
   var i2;
 
@@ -473,9 +471,14 @@ function controller(){
 
 
 
+  const numOfBits = Math.log2(Consts.upperBoundNumBits);
+  const ceilBits = Math.ceil(numOfBits);
+  const padSize = Math.pow(2,ceilBits) - Consts.upperBoundNumBits;
 
- 
-  const x1 = pickRandom(BigInteger(2).pow(Consts.upperBoundNUmBits));
+
+  if(Consts.upperBoundNumBits>256){console.log("error: upper bound should be <256bits");return;}
+  if(padSize>0){console.log("error: range works only for multiples of 2 for now");return;}
+  const x1 = pickRandom(BigInteger(2).pow(Consts.upperBoundNumBits));
   const r0 = pickRandom(Consts.q);
   const r1 = pickRandom(Consts.q);
   const pedCom1 = utils.ec.g.mul(x1.toString(Consts.HEX)).add(utils.ec.g.mul((r0.multiply(r1)).toString(Consts.HEX)));
