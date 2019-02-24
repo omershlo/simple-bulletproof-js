@@ -5,8 +5,11 @@ const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 
 
-function pickRandom(max = Consts.MAXIMUM_NUMBER) {
-  return BigInteger.randBetween(0, max);
+function pickRandom(max = Consts.MAXIMUM_NUMBER,min=0) {
+  return BigInteger.randBetween(min, max);
+}
+function turnToBig(number){
+  return BigInteger(number)
 }
 
 function pickRandomInRange(min = 0, max = Consts.MAXIMUM_NUMBER) {
@@ -50,6 +53,10 @@ function moduloSub(A,B,m){
 function moduloSubq(A,B){
   return modulo(modulo(A,Consts.q).subtract(modulo(B,Consts.q)),Consts.q);
 }
+function subtractBigAndNegate(A,B){
+  return A.subtract(B);
+
+}
 function moduloPow(base,exp, mod) {
   exp = new BigInteger(exp);
   mod = new BigInteger(mod);
@@ -64,7 +71,8 @@ function moduloPow(base,exp, mod) {
       base = modulo(base.square(),mod);
     }
   return r;
-  }
+}
+
 
 module.exports = {
   moduloMul,
@@ -79,4 +87,5 @@ module.exports = {
   moduloPow,
   ec,
   pickRandomInRange,
+  turnToBig
 };
