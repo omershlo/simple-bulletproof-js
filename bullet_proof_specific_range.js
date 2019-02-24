@@ -488,7 +488,6 @@ const r2 =pickRandom(Consts.q,r0)
 const r3 = pickRandom(Consts.q,r1)
 const difference=x1.subtract(start);
 const zero=BigInteger(0);
-console.log(difference)
 // prover proves that they have x1
 const pedCom1 =utils.ec.g.mul(x1.toString(Consts.HEX)).add(utils.ec.g.mul((r2.multiply(r3)).toString(Consts.HEX)));
 
