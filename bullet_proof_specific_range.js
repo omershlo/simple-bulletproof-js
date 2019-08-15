@@ -480,17 +480,19 @@ function controller(){
 
   if(Consts.upperBoundNumBits>256){console.log("error: upper bound should be <256bits");return;}
   if(padSize>0){console.log("error: range works only for powers of 2 for now");return;}
-const x1 = turnToBig(6)
-const start=turnToBig(Math.pow(2,Consts.start))
+const x1 = turnToBig(97)
+const start=turnToBig(0)
+const end=turnToBig(99)
+const x_minus_b=x1.subtract(end).add(turnToBig(Consts.MAX_RANGE_END))
 const r0 = pickRandom(Consts.q)
 const r1 = pickRandom(Consts.q)
 const r2 =pickRandom(Consts.q,r0)
 const r3 = pickRandom(Consts.q,r1)
 const difference=x1.subtract(start);
-const zero=BigInteger(0);
 // prover proves that they have x1
 const pedCom1 =utils.ec.g.mul(x1.toString(Consts.HEX)).add(utils.ec.g.mul((r2.multiply(r3)).toString(Consts.HEX)));
 
+const pedComXMinusb=utils.ec.g.mul(x_minus_b.toString(Consts.HEX)).add(utils.ec.g.mul((r2.multiply(r3)).toString(Consts.HEX)));
 
 //pedcom1-g*a+g*(r0*r1)-(g*(r2*r1)+g*(r0*r3))
 
@@ -529,8 +531,8 @@ const result10 = rangeBpVerifier(r1_diff,r2_diff,finalpedCom,A,S,T1,T2,tauX,miu,
  if(result10 == false){} //abort
    console.log("x>a",result10)
 //second proof to prove that x<b
-var {A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag} = rangeBpProver(x1,pedCom1,r2,r3);
-const result11 = rangeBpVerifier(r2,r3,pedCom1,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag);
+var {A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag} = rangeBpProver(x_minus_b,pedComXMinusb,r2,r3);
+const result11 = rangeBpVerifier(r2,r3,pedComXMinusb,A,S,T1,T2,tauX,miu,tX,L,R,aTag,bTag);
   console.log("x<b",result11)
 
 

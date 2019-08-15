@@ -9,11 +9,13 @@ const BigInteger = require('big-integer');
 const q = new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16);
 const MAXIMUM_NUMBER = new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16);
 const start=2;
-var upperBoundNumBits = 4;
+var MAX_RANGE_END= 4294967296 //2^32
+var upperBoundNumBits = 32;
 module.exports = {
   q,
   MAXIMUM_NUMBER,
   HEX: 16,
   upperBoundNumBits,
   start,
+  MAX_RANGE_END
 };
